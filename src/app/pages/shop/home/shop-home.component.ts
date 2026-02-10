@@ -57,7 +57,7 @@ interface Testimonial {
         <div class="max-w-2xl">
           <span class="inline-flex items-center gap-2 px-4 py-2 bg-brand-500/20 text-brand-300 text-sm font-medium rounded-full mb-6 backdrop-blur-sm border border-brand-500/30">
             <span class="w-2 h-2 bg-brand-400 rounded-full animate-pulse"></span>
-            Nouveau - Plus de 100 boutiques disponibles
+            Nouveau - Plus de 10 boutiques disponibles
           </span>
 
           <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
@@ -96,7 +96,7 @@ interface Testimonial {
           <!-- Stats -->
           <div class="flex flex-wrap gap-8 lg:gap-12">
             <div>
-              <p class="text-3xl lg:text-4xl font-bold text-white">100+</p>
+              <p class="text-3xl lg:text-4xl font-bold text-white">10+</p>
               <p class="text-sm text-gray-400">Boutiques partenaires</p>
             </div>
             <div>
@@ -401,59 +401,10 @@ interface Testimonial {
       </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="py-16 lg:py-24 bg-white dark:bg-gray-900">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Ce que disent nos clients
-          </h2>
-          <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Découvrez les avis de notre communauté de clients satisfaits
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          @for (testimonial of testimonials; track testimonial.id) {
-            <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 lg:p-8">
-              <!-- Stars -->
-              <div class="flex items-center gap-1 mb-4">
-                @for (star of [1,2,3,4,5]; track star) {
-                  <svg
-                    class="w-5 h-5"
-                    [class]="star <= testimonial.rating ? 'text-amber-400 fill-current' : 'text-gray-300 dark:text-gray-600'"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                }
-              </div>
-
-              <p class="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
-                "{{ testimonial.content }}"
-              </p>
-
-              <div class="flex items-center gap-4">
-                <img
-                  [src]="testimonial.avatar"
-                  [alt]="testimonial.name"
-                  class="w-12 h-12 rounded-full object-cover"
-                />
-                <div>
-                  <p class="font-semibold text-gray-900 dark:text-white">{{ testimonial.name }}</p>
-                  <p class="text-sm text-gray-500 dark:text-gray-400">{{ testimonial.role }}</p>
-                </div>
-              </div>
-            </div>
-          }
-        </div>
-      </div>
-    </section>
-
     <!-- Features Section -->
     <section class="py-16 lg:py-24 bg-gray-50 dark:bg-gray-800/50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           @for (feature of features; track feature.title) {
             <div class="text-center">
               <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-brand-500/20 to-brand-600/20 flex items-center justify-center">
@@ -469,101 +420,6 @@ interface Testimonial {
       </div>
     </section>
 
-    <!-- Newsletter -->
-    <section class="py-16 lg:py-24 bg-brand-600 dark:bg-brand-700">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-3xl mx-auto text-center">
-          <h2 class="text-3xl lg:text-4xl font-bold text-white mb-4">
-            Restez informé de nos offres
-          </h2>
-          <p class="text-lg text-brand-100 mb-8">
-            Inscrivez-vous à notre newsletter et recevez en exclusivité nos meilleures promotions et nouveautés.
-          </p>
-
-          <form (ngSubmit)="subscribeNewsletter()" class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
-            <input
-              type="email"
-              [(ngModel)]="newsletterEmail"
-              name="email"
-              placeholder="Votre adresse email"
-              required
-              class="flex-1 h-14 px-6 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-brand-200 focus:bg-white/20 focus:border-white/40 focus:ring-0 transition-all"
-            />
-            <button
-              type="submit"
-              class="h-14 px-8 bg-white text-brand-600 font-semibold rounded-xl hover:bg-brand-50 shadow-lg transition-all"
-            >
-              S'inscrire
-            </button>
-          </form>
-
-          @if (newsletterSuccess) {
-            <p class="mt-4 text-brand-100 flex items-center justify-center gap-2">
-              <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-              </svg>
-              Merci pour votre inscription !
-            </p>
-          }
-
-          <p class="mt-6 text-sm text-brand-200">
-            En vous inscrivant, vous acceptez de recevoir nos communications. Désabonnement possible à tout moment.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- App Download Banner -->
-    <section class="py-16 lg:py-24 bg-white dark:bg-gray-900">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl overflow-hidden">
-          <div class="absolute inset-0">
-            <div class="absolute top-0 right-0 w-96 h-96 bg-brand-500/20 rounded-full blur-3xl"></div>
-            <div class="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"></div>
-          </div>
-
-          <div class="relative flex flex-col lg:flex-row items-center gap-8 lg:gap-16 p-8 lg:p-16">
-            <div class="flex-1 text-center lg:text-left">
-              <h2 class="text-3xl lg:text-4xl font-bold text-white mb-4">
-                Téléchargez notre application
-              </h2>
-              <p class="text-lg text-gray-300 mb-8">
-                Accédez à toutes nos fonctionnalités directement depuis votre smartphone.
-                Commandez en un clic et suivez vos livraisons en temps réel.
-              </p>
-              <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <a href="#" class="inline-flex items-center gap-3 px-6 py-3 bg-white rounded-xl hover:bg-gray-100 transition-colors">
-                  <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
-                  </svg>
-                  <div class="text-left">
-                    <p class="text-xs text-gray-500">Télécharger sur</p>
-                    <p class="text-sm font-semibold text-gray-900">App Store</p>
-                  </div>
-                </a>
-                <a href="#" class="inline-flex items-center gap-3 px-6 py-3 bg-white rounded-xl hover:bg-gray-100 transition-colors">
-                  <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 010 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.802 8.99l-2.303 2.303-8.635-8.635z"/>
-                  </svg>
-                  <div class="text-left">
-                    <p class="text-xs text-gray-500">Disponible sur</p>
-                    <p class="text-sm font-semibold text-gray-900">Google Play</p>
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            <div class="flex-shrink-0">
-              <img
-                src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=300&q=80"
-                alt="Application mobile"
-                class="w-64 h-auto rounded-3xl shadow-2xl"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   `
 })
 export class ShopHomeComponent implements OnInit {
@@ -656,11 +512,6 @@ export class ShopHomeComponent implements OnInit {
       title: 'Support 7j/7',
       description: 'Notre équipe est disponible tous les jours pour vous aider',
       icon: 'M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z'
-    },
-    {
-      title: 'Retours gratuits',
-      description: 'Satisfait ou remboursé sous 14 jours sans frais',
-      icon: 'M16 15v-1a4 4 0 00-4-4H8m0 0l3 3m-3-3l3-3m9 14V5a2 2 0 00-2-2H6a2 2 0 00-2 2v16l4-2 4 2 4-2 4 2z'
     }
   ];
 
