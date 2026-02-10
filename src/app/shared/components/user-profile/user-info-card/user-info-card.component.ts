@@ -26,7 +26,7 @@ export class UserInfoCardComponent {
   closeModal() { this.isOpen = false; }
 
   user = {
-    firstName: 'Musharof',
+    firstName: 'arof',
     lastName: 'Chowdhury',
     email: 'randomuser@pimjo.com',
     phone: '+09 363 398 46',

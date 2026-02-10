@@ -88,9 +88,6 @@ import { FormsModule } from '@angular/forms';
                 <a href="#" class="text-gray-400 hover:text-brand-400 transition-colors">Suivi de commande</a>
               </li>
               <li>
-                <a href="#" class="text-gray-400 hover:text-brand-400 transition-colors">Retours & Échanges</a>
-              </li>
-              <li>
                 <a href="#" class="text-gray-400 hover:text-brand-400 transition-colors">Livraison</a>
               </li>
               <li>
@@ -191,7 +188,7 @@ import { FormsModule } from '@angular/forms';
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div class="flex flex-col md:flex-row items-center justify-between gap-4">
             <p class="text-sm text-gray-500">
-              &copy; {{ currentYear }} Centre Commercial. Tous droits réservés.
+              &copy; {{ currentYear }} RAKOTONIRINA Mirantsoa Fanyah
             </p>
             <div class="flex flex-wrap items-center justify-center gap-6">
               <a href="#" class="text-sm text-gray-500 hover:text-brand-400 transition-colors">Conditions générales</a>

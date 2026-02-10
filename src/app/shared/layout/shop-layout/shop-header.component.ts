@@ -146,23 +146,25 @@ interface CategoryItem {
                 }
               </button>
 
-              <!-- Cart -->
-              <a
-                routerLink="/cart"
-                class="relative p-2.5 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors"
-                aria-label="Panier"
-              >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                </svg>
-                @if ((cartItemCount$ | async) || 0; as count) {
-                  @if (count > 0) {
-                    <span class="absolute -top-0.5 -right-0.5 flex items-center justify-center min-w-[20px] h-5 px-1.5 text-xs font-bold text-white bg-brand-600 rounded-full ring-2 ring-white dark:ring-gray-900">
-                      {{ count > 99 ? '99+' : count }}
-                    </span>
+              <!-- Cart (visible uniquement si connecté) -->
+              @if (isAuthenticated$ | async) {
+                <a
+                  routerLink="/cart"
+                  class="relative p-2.5 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors"
+                  aria-label="Panier"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                  </svg>
+                  @if ((cartItemCount$ | async) || 0; as count) {
+                    @if (count > 0) {
+                      <span class="absolute -top-0.5 -right-0.5 flex items-center justify-center min-w-[20px] h-5 px-1.5 text-xs font-bold text-white bg-brand-600 rounded-full ring-2 ring-white dark:ring-gray-900">
+                        {{ count > 99 ? '99+' : count }}
+                      </span>
+                    }
                   }
-                }
-              </a>
+                </a>
+              }
 
               <!-- Divider -->
               <div class="hidden lg:block w-px h-8 bg-gray-200 dark:bg-gray-700"></div>
