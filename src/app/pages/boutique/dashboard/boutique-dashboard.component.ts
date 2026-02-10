@@ -56,7 +56,7 @@ interface TopProduct {
       </div>
 
       <!-- Stats Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Pending Orders -->
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
           <div class="flex items-center justify-between">
@@ -116,25 +116,7 @@ interface TopProduct {
             </svg>
           </a>
         </div>
-
-        <!-- Visitors -->
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Visiteurs ce mois</p>
-              <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ stats().monthlyVisitors | number }}</p>
-            </div>
-            <div class="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
-              <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-              </svg>
-            </div>
-          </div>
-          <p class="mt-4 text-sm text-gray-500 dark:text-gray-400">
-            {{ stats().todayVisitors }} aujourd'hui
-          </p>
-        </div>
+        
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -200,7 +182,7 @@ interface TopProduct {
         <!-- Top Products -->
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
           <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Meilleurs produits</h2>
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Meilleurs Ventes</h2>
             <a routerLink="/boutique/products" class="text-sm text-brand-600 dark:text-brand-400 hover:underline">
               Voir tout
             </a>
