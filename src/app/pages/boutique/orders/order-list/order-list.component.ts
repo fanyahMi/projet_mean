@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-type OrderStatus = 'all' | 'pending' | 'confirmed' | 'processing' | 'ready' | 'delivered' | 'cancelled';
+type OrderStatus = 'all' | 'pending' | 'confirmed' | 'delivered' | 'cancelled';
 
 interface OrderItem {
   id: string;
@@ -71,34 +71,6 @@ interface Order {
             <div>
               <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ getStatusCount('pending') }}</p>
               <p class="text-sm text-gray-500 dark:text-gray-400">En attente</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-              <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <div>
-              <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ getStatusCount('processing') }}</p>
-              <p class="text-sm text-gray-500 dark:text-gray-400">En preparation</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
-              <svg class="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
-              </svg>
-            </div>
-            <div>
-              <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ getStatusCount('ready') }}</p>
-              <p class="text-sm text-gray-500 dark:text-gray-400">Pret</p>
             </div>
           </div>
         </div>
@@ -342,8 +314,6 @@ export class BoutiqueOrderListComponent {
     { value: 'all', label: 'Toutes' },
     { value: 'pending', label: 'En attente' },
     { value: 'confirmed', label: 'Confirmees' },
-    { value: 'processing', label: 'En preparation' },
-    { value: 'ready', label: 'Pret' },
     { value: 'delivered', label: 'Livrees' },
     { value: 'cancelled', label: 'Annulees' }
   ];
@@ -402,7 +372,7 @@ export class BoutiqueOrderListComponent {
       subtotal: 210000,
       shipping: 5000,
       total: 215000,
-      status: 'processing',
+      status: 'confirmed',
       paymentMethod: 'Cash a la livraison',
       shippingAddress: { street: '78 Rue Rabezavana', city: 'Antsirabe', postalCode: '110', country: 'Madagascar' },
       createdAt: new Date('2024-01-14T16:20:00'),
@@ -421,7 +391,7 @@ export class BoutiqueOrderListComponent {
       subtotal: 95000,
       shipping: 5000,
       total: 100000,
-      status: 'ready',
+      status: 'pending',
       paymentMethod: 'Mobile Money',
       shippingAddress: { street: '12 Boulevard Ratsimandrava', city: 'Antananarivo', postalCode: '101', country: 'Madagascar' },
       createdAt: new Date('2024-01-14T11:00:00'),
@@ -524,8 +494,6 @@ export class BoutiqueOrderListComponent {
     const labels: Record<string, string> = {
       'pending': 'En attente',
       'confirmed': 'Confirmee',
-      'processing': 'En preparation',
-      'ready': 'Pret',
       'delivered': 'Livree',
       'cancelled': 'Annulee'
     };
@@ -536,8 +504,6 @@ export class BoutiqueOrderListComponent {
     const classes: Record<string, string> = {
       'pending': 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
       'confirmed': 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
-      'processing': 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-400',
-      'ready': 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400',
       'delivered': 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
       'cancelled': 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
     };
@@ -546,10 +512,7 @@ export class BoutiqueOrderListComponent {
 
   getNextStatuses(currentStatus: string): { value: OrderStatus; label: string }[] {
     const workflow: Record<string, { value: OrderStatus; label: string }[]> = {
-      'pending': [{ value: 'confirmed', label: 'Confirmer la commande' }],
-      'confirmed': [{ value: 'processing', label: 'Commencer la preparation' }],
-      'processing': [{ value: 'ready', label: 'Marquer comme pret' }],
-      'ready': [{ value: 'delivered', label: 'Marquer comme livre' }]
+      'pending': [{ value: 'confirmed', label: 'Confirmer la commande' }]
     };
     return workflow[currentStatus] || [];
   }

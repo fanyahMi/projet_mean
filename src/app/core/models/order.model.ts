@@ -3,8 +3,6 @@ import { Address } from './user.model';
 export type OrderStatus =
   | 'pending'
   | 'confirmed'
-  | 'processing'
-  | 'ready_for_pickup'
   | 'shipped'
   | 'delivered'
   | 'cancelled'
