@@ -1,0 +1,26 @@
+const mongoose = require('mongoose');
+
+const boutiqueSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    slug: { type: String, required: true, unique: true },
+    description: { type: String },
+    logo: { type: String },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'active', 'inactive', 'rejected'],
+        default: 'pending'
+    },
+    contactEmail: { type: String },
+    contactPhone: { type: String },
+    categoryId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category'
+    }
+}, { timestamps: true });
+
+module.exports = mongoose.model('Boutique', boutiqueSchema);
