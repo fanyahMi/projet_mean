@@ -33,7 +33,7 @@ services:
       PORT: 5000
       MONGO_URI: mongodb://${MONGO_ROOT_USER:-mall_admin}:${MONGO_ROOT_PASSWORD:-mall_secret_2026}@mongo:27017/mall_manage_db?authSource=admin
       JWT_SECRET: ${JWT_SECRET:-replace_with_a_strong_secret}
-      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost,http://localhost:80,http://localhost:4200}
       APP_BASE_URL: ${APP_BASE_URL:-http://localhost}
       SWAGGER_ENABLED: ${SWAGGER_ENABLED:-false}
       # Configuration SMTP

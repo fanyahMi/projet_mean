@@ -92,28 +92,35 @@ exports.register = async (req, res) => {
 // @access  Public
 exports.login = async (req, res) => {
     try {
+        console.log('🔐 Login attempt:', { email: req.body?.email, hasPassword: !!req.body?.password });
         const { email, password } = req.body;
 
         // Input validation
         if (!email || typeof email !== 'string') {
+            console.log('❌ Invalid email format');
             return res.status(400).json({ message: 'Email requis' });
         }
         if (!password || typeof password !== 'string') {
+            console.log('❌ Invalid password format');
             return res.status(400).json({ message: 'Mot de passe requis' });
         }
 
         // Check for user email
         const user = await User.findOne({ email: email.toLowerCase() });
+        console.log('👤 User found:', user ? user.email : 'NOT FOUND');
 
         if (user && (await user.matchPassword(password))) {
+            console.log('✅ Login successful for:', user.email);
             res.json({
                 user: formatUser(user),
                 token: generateToken(user._id)
             });
         } else {
+            console.log('❌ Login failed - invalid credentials');
             res.status(401).json({ message: 'Invalid email or password' });
         }
     } catch (error) {
+        console.error('❌ Login error:', error);
         res.status(500).json({ message: error.message });
     }
 };

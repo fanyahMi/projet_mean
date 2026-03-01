@@ -96,8 +96,17 @@ export class SigninFormComponent {
       error: (error) => {
         this.isLoading = false;
         this.successMessage = '';
-        this.errorMessage = 'Email ou mot de passe incorrect';
         console.error('Login error:', error);
+        console.error('Error details:', {
+          status: error?.status,
+          statusText: error?.statusText,
+          message: error?.error?.message || error?.message,
+          url: error?.url,
+          error: error?.error
+        });
+        // Afficher le message d'erreur du serveur si disponible
+        const serverMessage = error?.error?.message || error?.message;
+        this.errorMessage = serverMessage || 'Email ou mot de passe incorrect';
       }
     });
   }

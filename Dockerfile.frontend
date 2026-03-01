@@ -6,6 +6,7 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
+# Configuration de production pour le déploiement
 RUN npm run build
 
 FROM nginx:1.27-alpine

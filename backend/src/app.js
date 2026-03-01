@@ -40,15 +40,48 @@ const allowedOrigins = (process.env.CORS_ORIGIN || '')
     .map((origin) => origin.trim())
     .filter(Boolean);
 
+// Log CORS configuration au démarrage
+console.log('🔧 CORS Configuration:');
+console.log('  - NODE_ENV:', process.env.NODE_ENV);
+console.log('  - Allowed Origins:', allowedOrigins.length > 0 ? allowedOrigins : '(all origins allowed)');
+
 const corsOptions = {
     origin: (origin, callback) => {
-        // Allow non-browser clients (no origin) and allow all in dev if no CORS_ORIGIN is configured.
-        if (!origin || allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
+        // Log toutes les requêtes pour déboguer
+        console.log(`🌐 CORS Request - Origin: ${origin || 'no origin'}`);
+        
+        // Allow non-browser clients (no origin) - Postman, curl, etc.
+        if (!origin) {
+            console.log('✅ CORS: Allowing request without origin (non-browser client)');
             return callback(null, true);
         }
-        return callback(new Error('Not allowed by CORS'));
+        
+        // En développement, autoriser toutes les origines pour faciliter le debug
+        if (process.env.NODE_ENV !== 'production') {
+            console.log('✅ CORS: Allowing origin (development mode):', origin);
+            return callback(null, true);
+        }
+        
+        // En production : si CORS_ORIGIN n'est pas configuré, autoriser toutes les origines (avec warning)
+        if (allowedOrigins.length === 0) {
+            console.warn('⚠️  CORS: CORS_ORIGIN not configured in production! Allowing all origins (not recommended)');
+            return callback(null, true);
+        }
+        
+        // Vérifier si l'origine est autorisée
+        if (allowedOrigins.includes(origin)) {
+            console.log('✅ CORS: Allowing origin:', origin);
+            return callback(null, true);
+        }
+        
+        console.error('❌ CORS: Blocked origin:', origin);
+        console.error('   Allowed origins:', allowedOrigins);
+        return callback(new Error(`Not allowed by CORS. Origin: ${origin}`));
     },
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    exposedHeaders: ['Authorization']
 };
 
 app.use(cors(corsOptions));
@@ -172,11 +205,28 @@ app.use('/api/upload', uploadRoutes);
 // Error Handling Middleware
 // -----------------------------------------------
 app.use((err, req, res, next) => {
-    if (err.message === 'Not allowed by CORS') {
-        return res.status(403).json({ message: err.message });
+    if (err.message && err.message.includes('Not allowed by CORS')) {
+        console.error('🚫 CORS Error:', {
+            origin: req.headers.origin,
+            method: req.method,
+            path: req.path,
+            message: err.message
+        });
+        return res.status(403).json({ 
+            message: 'CORS Error: Origin not allowed',
+            error: err.message,
+            allowedOrigins: process.env.NODE_ENV === 'development' ? allowedOrigins : undefined
+        });
     }
 
-    console.error(err.stack);
+    console.error('❌ Server Error:', {
+        message: err.message,
+        stack: err.stack,
+        path: req.path,
+        method: req.method,
+        origin: req.headers.origin
+    });
+    
     res.status(500).json({
         message: 'Something went wrong!',
         error: process.env.NODE_ENV === 'development' ? err.message : undefined

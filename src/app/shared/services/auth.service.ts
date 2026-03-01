@@ -60,14 +60,25 @@ export class AuthService {
 
   login(credentials: AuthCredentials): Observable<AuthResponse> {
     this.loadingSubject.next(true);
+    const url = `${this.API_URL}/login`;
+    console.log('🔐 Login attempt:', { url, email: credentials.email, apiUrl: this.API_URL });
 
-    return this.http.post<AuthResponse>(`${this.API_URL}/login`, credentials).pipe(
+    return this.http.post<AuthResponse>(url, credentials).pipe(
       tap({
         next: (response) => {
+          console.log('✅ Login successful:', response);
           this.setAuth(response);
           this.loadingSubject.next(false);
         },
-        error: () => {
+        error: (error) => {
+          console.error('❌ Login error:', error);
+          console.error('Error details:', {
+            status: error?.status,
+            statusText: error?.statusText,
+            message: error?.error?.message || error?.message,
+            url: error?.url,
+            error: error?.error
+          });
           this.loadingSubject.next(false);
         }
       })
