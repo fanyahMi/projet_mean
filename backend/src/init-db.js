@@ -32,8 +32,6 @@ async function initializeDatabase() {
         // Vérifier si la base contient déjà des utilisateurs
         const userCount = await User.countDocuments();
         
-        // Déconnecter avant d'exécuter le seed (seed-demo.js gère sa propre connexion)
-        await mongoose.disconnect();
         
         if (userCount === 0) {
             console.log('📦 Base de données vide détectée');
