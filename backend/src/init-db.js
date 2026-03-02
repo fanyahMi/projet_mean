@@ -25,9 +25,7 @@ async function initializeDatabase() {
             mongoUri = `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@mongo:27017/mall_manage_db?authSource=admin`;
         }
 
-        // Connexion à MongoDB pour vérification
-        await mongoose.connect(mongoUri);
-        console.log('✅ Connexion MongoDB établie');
+        
 
         // Vérifier si la base contient déjà des utilisateurs
         const userCount = await User.countDocuments();
